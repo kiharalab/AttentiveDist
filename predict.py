@@ -53,7 +53,8 @@ def pred(args, target, model, mode):
 		input_features["10"] = input_features["10"].cuda()
 
 	if mode == "attn":
-		dist_outs,omega_outs,theta_outs,orientation_phi_outs,phi_outs,psi_outs = model(input_features["10-3"],input_features["10-1"],input_features["1"],input_features["10"])
+		dist_outs,omega_outs,theta_outs,orientation_phi_outs,phi_outs,psi_outs,attention_maps = model(input_features["10-3"],input_features["10-1"],input_features["1"],input_features["10"])
+		attention_maps = attention_maps.data.cpu()
 	else:
 		dist_outs,omega_outs,theta_outs,orientation_phi_outs,phi_outs,psi_outs = model(input_features[mode])
 
@@ -89,6 +90,9 @@ def pred(args, target, model, mode):
 	pred["theta"] = theta_pred
 	pred["orientation_phi"] = orientation_phi_pred
 
+	if mode == "attn":
+		pred["attention_maps"] = attention_maps
+
 	return pred
 
 def pred_attentivedist(args, models, target):
@@ -101,15 +105,19 @@ def pred_attentivedist(args, models, target):
 	pred_attentive_dist = {}
 
 	for k in pred_attn:
-		pred_attentive_dist[k] = (pred_attn[k] + pred_10_3[k] + pred_10_1[k] + pred_1[k] + pred_10[k])/5
- 
+		if k == 'attention_maps':
+			pred_attentive_dist['attention_maps'] = pred_attn['attention_maps']
+		else:
+			pred_attentive_dist[k] = (pred_attn[k] + pred_10_3[k] + pred_10_1[k] + pred_1[k] + pred_10[k])/5
+ 	
 	np.savez(join(args.out, target + '_prediction'),
 			dist=pred_attentive_dist["dist"],
 			phi=pred_attentive_dist["phi"],
 			psi=pred_attentive_dist["psi"],
 			omega=pred_attentive_dist["omega"],
 			theta=pred_attentive_dist["theta"],
-			orientation_phi=pred_attentive_dist["orientation_phi"])
+			orientation_phi=pred_attentive_dist["orientation_phi"],
+			attention_maps=pred_attentive_dist["attention_maps"])
 
 	print("AttentiveDist prediction done for %s"%(target))
 

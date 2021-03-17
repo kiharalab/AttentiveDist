@@ -59,7 +59,7 @@ class AttentiveDist(nn.Module):
     def forward(self, x1, x2=None, x3=None, x4=None, x5=None, x6=None, x7=None, x8=None):
 
         if self.attention:
-            x = self.shared(x1, x2, x3, x4, return_intermediate=True)
+            x, attention_maps = self.shared(x1, x2, x3, x4, return_intermediate=True)
         else:
             x = self.shared(x1, return_intermediate=True)
 
@@ -92,4 +92,7 @@ class AttentiveDist(nn.Module):
         angle_outs = x
 
         #For n output channels, n/2 channels are phi and n/2 channels are psi
-        return dist_outs,omega_outs,theta_outs,orientation_phi_outs,angle_outs[:,:int(self.out_channels_angle/2),:],angle_outs[:,int(self.out_channels_angle/2):,:]
+        if self.attention:
+            return dist_outs,omega_outs,theta_outs,orientation_phi_outs,angle_outs[:,:int(self.out_channels_angle/2),:],angle_outs[:,int(self.out_channels_angle/2):,:], attention_maps
+        else:
+            return dist_outs,omega_outs,theta_outs,orientation_phi_outs,angle_outs[:,:int(self.out_channels_angle/2),:],angle_outs[:,int(self.out_channels_angle/2):,:]

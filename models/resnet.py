@@ -163,7 +163,7 @@ class AttentionNet(nn.Module):
 
         # x has dimension 1x64xLxL
         if return_intermediate:
-            return x
+            return x, attention_maps
 
         outs = self.convlast(x)
-        return outs
+        return outs, attention_maps
