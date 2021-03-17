@@ -64,7 +64,7 @@ python predict.py --target [File containing target names] --input_dir [Input dir
 ```
 Note:
 1. Run the `feature_gen.py` and generate the feature before prediction.
-2. The prediction will be saved as `[Target protein name]_prediction.npz`. It contains distance, backbone angle and orientation predictions and attention maps for the 4 MSA in the order 0.001, 0.1, 1 and 10. To get the predictions please refer to eval/eval_casp13.py code. Attention maps are stored under key "attention_maps".
+2. The prediction will be saved as `[Target protein name]_prediction.npz`. It contains distance, backbone angle and orientation predictions and attention maps for the 4 MSA in the order 0.001, 0.1, 1 and 10. Reference code to load the predictions can be found in `eval/eval_casp13.py`. Attention maps are stored under key "attention_maps".
 3. Use `--cuda` if GPU is avaliable
 4. Expected runtime (given inputs are present):
 	GPU: ~10 sec,
