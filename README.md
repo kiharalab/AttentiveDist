@@ -4,7 +4,9 @@ AttentiveDist is protein inter-residue distance prediction method based on deep 
 The model is trained in multi-task fashion, predicting backbone and orientation angles as well.
 
 **Reference**\
-Aashish Jain, Genki Terashi, Yuki Kagaya, Sai Raghavendra Maddhuri Venkata Subramaniya, Charles Christoffer, and Daisuke Kihara, *Analyzing Effect of Quadruple Multiple Sequence Alignments on Deep Learning based Protein Inter-Residue Distance Prediction.* (In submission, 2021)
+Aashish Jain, Genki Terashi, Yuki Kagaya, Sai Raghavendra Maddhuri Venkata Subramaniya, Charles Christoffer, and Daisuke Kihara, Analyzing Effect of Quadruple Multiple Sequence Alignments on Deep Learning based Protein Inter-Residue Distance Prediction. Scientific Reports 11, 7574 (2021)
+
+https://www.nature.com/articles/s41598-021-87204-z
 
 License: GPL v3 for academic use. (For commercial use, please contact us for different licensing.)
 Contact: Daisuke Kihara ([dkihara@purdue.edu](mailto:dkihara@purdue.edu))
